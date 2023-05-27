@@ -1,0 +1,19 @@
+.visible {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.cat-info {
+  display: flex;
+
+  margin-top: 20px;
+  gap: 20px;
+}
