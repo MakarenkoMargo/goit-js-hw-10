@@ -23,11 +23,18 @@ function hideError() {
 }
 
 function showLoader() {
+  const loaderSpan = document.createElement('span');
+  loaderSpan.classList.add('loader-s');
+  loader.parentNode.insertBefore(loaderSpan, loader);
   loader.classList.remove('hidden');
   loader.classList.add('visible');
 }
 
 function hideLoader() {
+  const loaderSpan = document.querySelector('.loader-s');
+  if (loaderSpan) {
+    loaderSpan.remove();
+  }
   loader.classList.remove('visible');
   loader.classList.add('hidden');
 }
@@ -50,6 +57,7 @@ function showError() {
 hideError();
 hideCatInfo();
 showLoader();
+
 hideBreedSelect();
 
 fetchBreeds()
