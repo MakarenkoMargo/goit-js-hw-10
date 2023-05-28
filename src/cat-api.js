@@ -1,3 +1,5 @@
+import Notiflix from 'notiflix';
+
 export function fetchBreeds() {
   const url = 'https://api.thecatapi.com/v1/breeds';
   const api_key =
@@ -16,7 +18,7 @@ export function fetchBreeds() {
     })
     .catch(error => {
       console.log(error);
-      throw new Error('Failed to fetch breeds');
+      Notiflix.Notify.failure('Failed to fetch breeds');
     });
 }
 
@@ -32,7 +34,7 @@ export function fetchCatByBreed(breedId) {
   })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Request failed');
+        Notiflix.Notify.failure('Request failed');
       }
       return response.json();
     })
@@ -47,11 +49,11 @@ export function fetchCatByBreed(breedId) {
           temperament: breedInfo.temperament,
         };
       } else {
-        throw new Error('Cat data not found');
+        Notiflix.Notify.failure('Cat data not found');
       }
     })
     .catch(error => {
       console.log(error);
-      throw new Error('Failed to fetch cat data');
+      Notiflix.Notify.failure('Failed to fetch cat data');
     });
 }
