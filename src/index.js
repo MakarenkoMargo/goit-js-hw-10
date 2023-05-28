@@ -1,11 +1,22 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
+import Notiflix from 'notiflix';
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const catInfoDiv = document.querySelector('.cat-info');
 const error = document.querySelector('.error');
+
+function hideBreedSelector() {
+  breedSelect.classList.remove('visible');
+  breedSelect.classList.add('hidden');
+}
+
+function showBreedSelector() {
+  breedSelect.classList.remove('hidden');
+  breedSelect.classList.add('visible');
+}
 
 function hideError() {
   error.classList.remove('visible');
@@ -41,15 +52,17 @@ hideError();
 hideCatInfo();
 
 showLoader();
+hideBreedSelector();
 
 fetchBreeds()
   .then(breeds => {
-    breeds.forEach(breed => {
+    const breedOptions = breeds.map(breed => {
       const option = document.createElement('option');
       option.value = breed.id;
       option.textContent = breed.name;
-      breedSelect.appendChild(option);
+      return option;
     });
+    breedSelect.innerHTML = breedOptions.join('');
     hideLoader();
     breedSelect.classList.remove('hidden');
   })
@@ -57,11 +70,12 @@ fetchBreeds()
     console.log(error);
     showError();
     hideLoader();
+    showBreedSelector();
   });
 
 breedSelect.addEventListener('change', function () {
   const breedId = breedSelect.value;
-
+  hideBreedSelector();
   showLoader();
   hideCatInfo();
   hideError();
@@ -93,10 +107,12 @@ breedSelect.addEventListener('change', function () {
 
       hideLoader();
       showCatInfo();
+      showBreedSelector();
     })
     .catch(error => {
       console.log(error);
       showError();
       hideLoader();
+      showBreedSelector();
     });
 });

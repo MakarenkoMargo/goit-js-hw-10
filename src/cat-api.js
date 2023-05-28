@@ -1,3 +1,5 @@
+import Notiflix from 'notiflix';
+
 export function fetchBreeds() {
   const url = 'https://api.thecatapi.com/v1/breeds';
   const api_key =
