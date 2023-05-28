@@ -7,6 +7,16 @@ const loader = document.querySelector('.loader');
 const catInfoDiv = document.querySelector('.cat-info');
 const error = document.querySelector('.error');
 
+function showBreedSelect() {
+  breedSelect.classList.remove('hidden');
+  breedSelect.classList.add('visible');
+}
+
+function hideBreedSelect() {
+  breedSelect.classList.remove('visible');
+  breedSelect.classList.add('hidden');
+}
+
 function hideError() {
   error.classList.remove('visible');
   error.classList.add('hidden');
@@ -39,8 +49,8 @@ function showError() {
 
 hideError();
 hideCatInfo();
-
 showLoader();
+hideBreedSelect();
 
 fetchBreeds()
   .then(breeds => {
@@ -51,20 +61,21 @@ fetchBreeds()
       breedSelect.appendChild(option);
     });
     hideLoader();
-    breedSelect.classList.remove('hidden');
+    showBreedSelect();
   })
   .catch(error => {
     console.log(error);
     showError();
     hideLoader();
+    showBreedSelect();
   });
 
 breedSelect.addEventListener('change', function () {
   const breedId = breedSelect.value;
-
-  showLoader();
   hideCatInfo();
+  showLoader();
   hideError();
+  hideBreedSelect();
 
   fetchCatByBreed(breedId)
     .then(catData => {
@@ -93,10 +104,12 @@ breedSelect.addEventListener('change', function () {
 
       hideLoader();
       showCatInfo();
+      showBreedSelect();
     })
     .catch(error => {
       console.log(error);
       showError();
       hideLoader();
+      showBreedSelect();
     });
 });
