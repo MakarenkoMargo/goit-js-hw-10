@@ -1,4 +1,5 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
+import SlimSelect from 'slim-select';
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
@@ -66,8 +67,15 @@ fetchBreeds()
       option.textContent = breed.name;
       breedSelect.appendChild(option);
     });
+    new SlimSelect({
+      select: breedSelect,
+      settings: {
+        showSearch: false,
+      },
+    });
     hideLoader();
     showBreedSelect();
+    hideError();
   })
   .catch(error => {
     console.log(error);
